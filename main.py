@@ -5,6 +5,8 @@ import sys
 import folderWatch
 from PyQt5 import QtWidgets
 
+folderWatch = folderWatch.FolderWatch()
+
 list = folderWatch.getFileList(path = "/Volumes/Workspace", fileType = "PEF")
 
 if list is not None:
