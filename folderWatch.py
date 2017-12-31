@@ -17,7 +17,7 @@ class FolderWatch:
         for i in range(len(list)):
             searched = re.search(".(" + targetFileType.upper() + "|" + targetFileType.lower() + ")$", list[i])
 
-            if searched:
+            if not searched:
                 indexes.append(i)
 
         return indexes
