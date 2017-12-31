@@ -1,4 +1,8 @@
 * Requirement
+Python 3.6.4
+
+Qt 5.10.0_0
+
 ** pip
 #+BEGIN_SRC
 Pillow==4.3.0
