@@ -1,4 +1,4 @@
-* Requiremwnr
+* Requirement
 ** pip
 #+BEGIN_SRC
 Pillow==4.3.0
