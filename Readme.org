@@ -1,0 +1,8 @@
+* Require
+** pip
+#+BEGIN_SRC
+Pillow==4.3.0
+#+END_SRC
+
+** Other
+exiftool 10.70
