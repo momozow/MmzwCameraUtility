@@ -2,36 +2,39 @@ import os
 import re
 
 class FolderWatch:
-    def __deleteFileNotTargetTypeFromList(self, list, targetFileType):
-        indexesOfNotTargetFile = self.__searchFileNotTargetType(list, targetFileType)
-        
-        # delete file not target type from list
-        for i in indexesOfNotTargetFile:
-            del list[i]
+    def __extractTargetTypeFileFromList(self, list, targetFileType):
+        indexesOfTargetFile = []
+        for fileType in targetFileType:
+            indexesOfTargetFile.extend(self.__searchTargetType(list, fileType))
 
-        return list
+        targetTypeFileList = []
+        # extract file target type from list
+        for i in indexesOfTargetFile:
+            targetTypeFileList.append(list[i])
 
-    def __searchFileNotTargetType(self, list, targetFileType):
+        return targetTypeFileList
+
+    def __searchTargetType(self, list, targetFileType):
         indexes = []
         
         for i in range(len(list)):
             searched = re.search(".(" + targetFileType.upper() + "|" + targetFileType.lower() + ")$", list[i])
 
-            if not searched:
+            if searched:
                 indexes.append(i)
 
         return indexes
         
 
-    def getFileList(self, path, fileType = None):
+    def getFileList(self, path, targetType = None):
         if not os.path.exists(path):
             print("Directory \"" + path + "\" is not exist.\n")
             return []
 
         list = os.listdir(path)
 
-        if fileType is not None:
-            list = self.__deleteFileNotTargetTypeFromList(list, fileType)
+        if targetType is not None:
+            list = self.__extractTargetTypeFileFromList(list, targetType)
             
         return list
 
