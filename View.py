@@ -32,12 +32,12 @@ class View(QtWidgets.QWidget):
     def __getAndShowPreviewOfCurrentItem(self, current, previous):
         if current is not None:
             imageQt = ImageController.readThumbnail(self.__workSpaceLabel.text() + current.text())
-            self.showImage(imageQt)
+            self.__showImage(imageQt)
 
     def setWorkSpace(self, workSpace):
         self.__workSpaceLabel.setText(workSpace)
             
-    def showImage(self, imageqt):
+    def __showImage(self, imageqt):
         pixmap = QtGui.QPixmap.fromImage(imageqt)
         
         self.__imageLabel.setPixmap(pixmap)
