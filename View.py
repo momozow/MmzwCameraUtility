@@ -23,7 +23,7 @@ class View(QtWidgets.QWidget):
         vbox.addWidget(self.__imageLabel)
         vbox.addWidget(self.__workSpaceLabel)
         vbox.addWidget(self.__listWidget)
-        
+
         self.setLayout(vbox)
 
     def __setSlot(self):
@@ -40,6 +40,9 @@ class View(QtWidgets.QWidget):
 
     def setWorkSpace(self, workSpace):
         self.__workSpaceLabel.setText(workSpace)
+
+    def getWorkSpace(self):
+        return self.__workSpaceLabel.text()
             
     def showList(self, fileList):
         for fileName in fileList:

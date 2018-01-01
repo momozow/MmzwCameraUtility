@@ -10,14 +10,14 @@ from PyQt5 import (QtWidgets, QtGui)
 workSpace = "/Volumes/Workspace/"
 targetType = ["PEF", "jpg"]
 
-folderWatch = FolderWatch()
-fileList = folderWatch.getFileList(path = workSpace, targetType = targetType)
-
 if __name__ == '__main__':
     app = View.createApp(sys.argv)
     
     view = View()
     view.setWorkSpace(workSpace)
+
+    folderWatch = FolderWatch()
+    fileList = folderWatch.getFileList(path = view.getWorkSpace(), targetType = targetType)
 
     view.showList(fileList)
     view.show()
