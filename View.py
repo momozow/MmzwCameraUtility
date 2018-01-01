@@ -10,7 +10,7 @@ class View(QtWidgets.QWidget):
         super().__init__()
 
         self.__imageLabel = QtWidgets.QLabel()
-        self.__workSpaceLabel = QtWidgets.QLabel()
+        self.__workSpaceLabel = QtWidgets.QLineEdit()
         self.__listWidget = QtWidgets.QListWidget()
         
         self.__layout()
