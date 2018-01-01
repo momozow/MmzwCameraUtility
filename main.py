@@ -8,7 +8,7 @@ from View import View
 from PyQt5 import (QtWidgets, QtGui)
 
 workSpace = "/Volumes/Workspace/"
-targetType = ["PEF", "jpg"]
+targetType = ["PEF", "jpg", "svg"]
 
 if __name__ == '__main__':
     app = View.createApp(sys.argv)
