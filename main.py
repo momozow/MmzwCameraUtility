@@ -12,22 +12,18 @@ targetType = ["PEF", "jpg"]
 
 folderWatch = FolderWatch()
 
-list = folderWatch.getFileList(path = workSpace, targetType = targetType)
-
-if list is not None:
-    for file in list:
-        print(file)
+fileList = folderWatch.getFileList(path = workSpace, targetType = targetType)
 
 imageController = ImageController()
 imageqt = imageController.readThumbnail(workSpace + "/image.PEF")
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
+    app = View.createApp(sys.argv)
     
     view = View()
     view.showImage(imageqt)
-
+    view.showList(fileList)
     view.show()
     
     sys.exit(app.exec_())
