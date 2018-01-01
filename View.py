@@ -31,7 +31,8 @@ class View(QtWidgets.QWidget):
         
     def __getAndShowPreviewOfCurrentItem(self, current, previous):
         if current is not None:
-            print(self.__workSpaceLabel.text() + current.text())
+            imageQt = ImageController.readThumbnail(self.__workSpaceLabel.text() + current.text())
+            self.showImage(imageQt)
 
     def setWorkSpace(self, workSpace):
         self.__workSpaceLabel.setText(workSpace)
