@@ -11,18 +11,14 @@ workSpace = "/Volumes/Workspace/"
 targetType = ["PEF", "jpg"]
 
 folderWatch = FolderWatch()
-
 fileList = folderWatch.getFileList(path = workSpace, targetType = targetType)
-
-imageqt = ImageController.readThumbnail(workSpace + "/image.PEF")
-
 
 if __name__ == '__main__':
     app = View.createApp(sys.argv)
     
     view = View()
     view.setWorkSpace(workSpace)
-    view.showImage(imageqt)
+
     view.showList(fileList)
     view.show()
     
