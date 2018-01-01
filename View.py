@@ -31,17 +31,16 @@ class View(QtWidgets.QWidget):
         
     def __getAndShowPreviewOfCurrentItem(self, current, previous):
         if current is not None:
-            imageQt = ImageController.readThumbnail(self.__workSpaceLabel.text() + current.text())
-            self.__showImage(imageQt)
+            self.__showImage(ImageController.readThumbnail(self.__workSpaceLabel.text() + current.text()))
 
-    def setWorkSpace(self, workSpace):
-        self.__workSpaceLabel.setText(workSpace)
-            
     def __showImage(self, imageqt):
         pixmap = QtGui.QPixmap.fromImage(imageqt)
         
         self.__imageLabel.setPixmap(pixmap)
 
+    def setWorkSpace(self, workSpace):
+        self.__workSpaceLabel.setText(workSpace)
+            
     def showList(self, fileList):
         for fileName in fileList:
             item = QtWidgets.QListWidgetItem()
