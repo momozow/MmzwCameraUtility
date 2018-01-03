@@ -61,3 +61,10 @@ class View(QtWidgets.QWidget):
             item.setText(fileName)
             
             self.__listWidget.addItem(item)
+
+    def getLatLonFromMap(self):
+        self.__webView.page().runJavaScript("latitude", print)
+
+    def keyPressEvent(self, e):
+        if e.key() == QtCore.Qt.Key_Escape:
+            self.getLatLonFromMap()
