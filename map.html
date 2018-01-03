@@ -14,16 +14,15 @@
 	 
 	 function getLatLon(e)
 	 {
-	     console.log(e.latlng);
-
+	     latitude = e.latlng.lat;
 	     if (e.latlng.lng <= 180 && e.latlng.lng >= -180)
 		 longitude = e.latlng.lng;
  	     else if (e.latlng.lng > 180)
  		 longitude = -180 + (e.latlng.lng % 180);
 	     else if (e.latlng.lng < 180)
 		 longitude =  180 + (e.latlng.lng % 180);
-	     
- 	     console.log(longitude);
+	     else
+		 longitude = 0;
 	 }
 	 
 	 window.onload = function()
