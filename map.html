@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+	      integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+	      crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+		integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+		crossorigin=""></script>
+	<script type="text/javascript">
+	 var latitude;
+	 var longitude;
+	 
+	 function getLatLon(e)
+	 {
+	     console.log(e.latlng);
+
+	     if (e.latlng.lng <= 180 && e.latlng.lng >= -180)
+		 longitude = e.latlng.lng;
+ 	     else if (e.latlng.lng > 180)
+ 		 longitude = -180 + (e.latlng.lng % 180);
+	     else if (e.latlng.lng < 180)
+		 longitude =  180 + (e.latlng.lng % 180);
+	     
+ 	     console.log(longitude);
+	 }
+	 
+	 window.onload = function()
+	 {
+	     var map = L.map('map').setView([36.3219088　, 139.0032936], 14);
+	     
+	     //OSMレイヤー追加
+	     L.tileLayer(
+		 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+		 {
+		     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
+		 }
+	     ).addTo(map);
+
+	     map.on('click', getLatLon);
+	 }
+	</script>
+    </head>
+    <body>
+	<div id="map" style="width: 500px; height: 300px;"></div>
+    </body>
+</html>
