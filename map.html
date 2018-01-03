@@ -11,6 +11,7 @@
 	<script type="text/javascript">
 	 var latitude;
 	 var longitude;
+	 var current;
 	 
 	 function getLatLon(e)
 	 {
@@ -37,7 +38,18 @@
 		 }
 	     ).addTo(map);
 
-	     map.on('click', getLatLon);
+	     map.on('click', function(e)
+		 {
+		     getLatLon(e);
+
+		     if (current != undefined)
+			 current.remove();
+		     
+		     current = L.marker([latitude, longitude]).addTo(map)
+				.bindPopup('Latitude:' + latitude + '<br>' +
+					   'Longitude:' + longitude)
+				.openPopup();
+		 });
 	 }
 	</script>
     </head>
