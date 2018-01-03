@@ -5,7 +5,6 @@ import sys
 from folderWatch import FolderWatch
 from ImageController import ImageController
 from View import View
-from PyQt5 import (QtWidgets, QtGui)
 
 workSpace = "/Volumes/Workspace/"
 targetType = ["PEF", "jpg", "svg"]
