@@ -1,5 +1,5 @@
 from ImageController import ImageController
-from PyQt5 import (QtWidgets, QtGui)
+from PyQt5 import (QtWidgets, QtWebEngineWidgets, QtGui, QtCore)
 
 class View(QtWidgets.QWidget):
     @staticmethod
@@ -12,6 +12,7 @@ class View(QtWidgets.QWidget):
         self.__imageLabel = QtWidgets.QLabel()
         self.__workSpaceLabel = QtWidgets.QLineEdit()
         self.__listWidget = QtWidgets.QListWidget()
+        self.__webView = QtWebEngineWidgets.QWebEngineView()
         
         self.__layout()
         self.__setSlot()
@@ -24,7 +25,11 @@ class View(QtWidgets.QWidget):
         vbox.addWidget(self.__workSpaceLabel)
         vbox.addWidget(self.__listWidget)
 
-        self.setLayout(vbox)
+        hbox = QtWidgets.QHBoxLayout()
+        hbox.addLayout(vbox)
+        hbox.addWidget(self.__webView)
+
+        self.setLayout(hbox)
 
     def __setSlot(self):
         self.__listWidget.currentItemChanged.connect(self.__getAndShowPreviewOfCurrentItem)
