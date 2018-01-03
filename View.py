@@ -1,19 +1,22 @@
 from ImageController import ImageController
 from PyQt5 import (QtWidgets, QtWebEngineWidgets, QtGui, QtCore)
+import os
 
 class View(QtWidgets.QWidget):
     @staticmethod
     def createApp(argv):
         return QtWidgets.QApplication(argv)
 
-    def __init__(self):
+    def __init__(self, execPath):
         super().__init__()
 
         self.__imageLabel = QtWidgets.QLabel()
         self.__workSpaceLabel = QtWidgets.QLineEdit()
         self.__listWidget = QtWidgets.QListWidget()
         self.__webView = QtWebEngineWidgets.QWebEngineView()
-        
+
+        self.__webView.load(QtCore.QUrl("file://" + execPath + "/map.html"))
+
         self.__layout()
         self.__setSlot()
         
