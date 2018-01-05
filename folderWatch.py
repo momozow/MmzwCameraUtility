@@ -2,10 +2,11 @@ import os
 import re
 
 class FolderWatch:
-    def __extractTargetTypeFileFromList(self, list, targetFileType):
+    @staticmethod
+    def __extractTargetTypeFileFromList(list, targetFileType):
         indexesOfTargetFile = []
         for fileType in targetFileType:
-            indexesOfTargetFile.extend(self.__searchTargetType(list, fileType))
+            indexesOfTargetFile.extend(FolderWatch.__searchTargetType(list, fileType))
 
         targetTypeFileList = []
         # extract file target type from list
@@ -14,7 +15,8 @@ class FolderWatch:
 
         return targetTypeFileList
 
-    def __searchTargetType(self, list, targetFileType):
+    @staticmethod
+    def __searchTargetType(list, targetFileType):
         indexes = []
         
         for i in range(len(list)):
@@ -25,8 +27,8 @@ class FolderWatch:
 
         return indexes
         
-
-    def getFileList(self, path, targetType = None):
+    @staticmethod
+    def getFileList(path, targetType = None):
         if not os.path.exists(path):
             print("Directory \"" + path + "\" is not exist.\n")
             return []
@@ -34,7 +36,7 @@ class FolderWatch:
         list = os.listdir(path)
 
         if targetType is not None:
-            list = self.__extractTargetTypeFileFromList(list, targetType)
+            list = FolderWatch.__extractTargetTypeFileFromList(list, targetType)
             
         return list
 
