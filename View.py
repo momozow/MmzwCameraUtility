@@ -15,16 +15,27 @@ class ImageLavel(QtWidgets.QLabel):
         pixmap = QtGui.QPixmap.fromImage(imageqt)
         self.setPixmap(pixmap)
 
+class WorkSpaceLabel(QtWidgets.QLineEdit):
+    def __init__(self, workSpacePath):
+        super().__init__()
+        self.setWorkSpace(workSpacePath)
+    
+    def setWorkSpace(self, workSpacePath):
+        self.setText(workSpacePath)
+
+    def getWorkSpace(self):
+        return self.text()
+
 class View(QtWidgets.QWidget):
     @staticmethod
     def createApp(argv):
         return QtWidgets.QApplication(argv)
 
-    def __init__(self, execPath):
+    def __init__(self, execPath, workSpacePath):
         super().__init__()
 
         self.__imageLabel = ImageLavel()
-        self.__workSpaceLabel = QtWidgets.QLineEdit()
+        self.__workSpaceLabel = WorkSpaceLabel(workSpacePath)
         self.__listWidget = QtWidgets.QListWidget()
         self.__webView = QtWebEngineWidgets.QWebEngineView()
 
@@ -53,17 +64,14 @@ class View(QtWidgets.QWidget):
         
     def __getAndShowPreviewOfCurrentItem(self, current, previous):
         if current is not None:
-            thumbnail = ImageController.readThumbnail(self.__workSpaceLabel.text() + current.text())
+            thumbnail = ImageController.readThumbnail(self.__workSpaceLabel.getWorkSpace() + current.text())
 
             if thumbnail is not None:
                 self.__imageLabel.showImage(thumbnail)
 
-    def setWorkSpace(self, workSpace):
-        self.__workSpaceLabel.setText(workSpace)
-
     def getWorkSpace(self):
-        return self.__workSpaceLabel.text()
-            
+        return self.__workSpaceLabel.getWorkSpace()
+        
     def showList(self, fileList):
         for fileName in fileList:
             item = QtWidgets.QListWidgetItem()
