@@ -39,4 +39,3 @@ class FolderWatch:
             list = FolderWatch.__extractTargetTypeFileFromList(list, targetType)
             
         return list
-
