@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys, os
-from folderWatch import FolderWatch
+from FolderWatch import FolderWatch
 from ImageController import ImageController
 from View import View
 
@@ -16,8 +16,7 @@ if __name__ == '__main__':
     
     view = View(os.path.dirname(os.path.abspath(__file__)), workSpace)
 
-    folderWatch = FolderWatch()
-    fileList = folderWatch.getFileList(path = view.getWorkSpace(), targetType = targetType)
+    fileList = FolderWatch.getFileList(path = view.getWorkSpace(), targetType = targetType)
 
     view.showList(fileList)
     view.show()
