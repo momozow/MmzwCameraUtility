@@ -10,6 +10,11 @@ class Filter(QtCore.QObject):
                 
         return False
 
+class ImageLavel(QtWidgets.QLabel):
+    def showImage(self, imageqt):
+        pixmap = QtGui.QPixmap.fromImage(imageqt)
+        self.setPixmap(pixmap)
+
 class View(QtWidgets.QWidget):
     @staticmethod
     def createApp(argv):
@@ -18,7 +23,7 @@ class View(QtWidgets.QWidget):
     def __init__(self, execPath):
         super().__init__()
 
-        self.__imageLabel = QtWidgets.QLabel()
+        self.__imageLabel = ImageLavel()
         self.__workSpaceLabel = QtWidgets.QLineEdit()
         self.__listWidget = QtWidgets.QListWidget()
         self.__webView = QtWebEngineWidgets.QWebEngineView()
@@ -51,12 +56,7 @@ class View(QtWidgets.QWidget):
             thumbnail = ImageController.readThumbnail(self.__workSpaceLabel.text() + current.text())
 
             if thumbnail is not None:
-                self.__showImage(thumbnail)
-
-    def __showImage(self, imageqt):
-        pixmap = QtGui.QPixmap.fromImage(imageqt)
-        
-        self.__imageLabel.setPixmap(pixmap)
+                self.__imageLabel.showImage(thumbnail)
 
     def setWorkSpace(self, workSpace):
         self.__workSpaceLabel.setText(workSpace)
