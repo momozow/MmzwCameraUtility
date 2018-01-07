@@ -4,10 +4,11 @@ import os
 
 class Filter(QtCore.QObject):
     def eventFilter(self, widget, event):
-        if event.type() == 51:
+        if event.type() == QtCore.QEvent.KeyRelease:
             if event.key() == QtCore.Qt.Key_Space:
                 print(True)
-                
+                return True
+
         return False
 
 class ImageLavel(QtWidgets.QLabel):
@@ -39,7 +40,7 @@ class View(QtWidgets.QWidget):
         self.__listWidget = QtWidgets.QListWidget()
         self.__webView = QtWebEngineWidgets.QWebEngineView()
 
-        self.__listWidget.installEventFilter(Filter(self))
+        self.installEventFilter(Filter(self))
         self.__webView.load(QtCore.QUrl("file://" + execPath + "/map.html"))
 
         self.__layout()
@@ -82,7 +83,7 @@ class View(QtWidgets.QWidget):
     def getLatLonFromMap(self):
         self.__webView.page().runJavaScript("latitude", print)
 
-    def keyPressEvent(self, e):
-        if e.key() == QtCore.Qt.Key_Space:
-            print('SPC')
-            self.getLatLonFromMap()
+    # def keyPressEvent(self, e):
+    #     if e.key() == QtCore.Qt.Key_Space:
+    #         print('SPC')
+    #         self.getLatLonFromMap()
