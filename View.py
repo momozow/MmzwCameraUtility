@@ -47,7 +47,7 @@ class View(QtWidgets.QWidget):
         self.__imageLabel = ImageLavel()
         self.__workSpaceLabel = WorkSpaceLabel(workSpacePath)
         self.__listWidget = QtWidgets.QListWidget()
-        self.__webView = QtWebEngineWidgets.QWebEngineView()
+        self.__webView = WebView()
 
         self.installEventFilter(Filter(self))
         self.__webView.load(QtCore.QUrl("file://" + execPath + "/map.html"))
