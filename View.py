@@ -30,6 +30,10 @@ class WorkSpaceLabel(QtWidgets.QLineEdit):
         return self.text()
 
 class WebView(QtWebEngineWidgets.QWebEngineView):
+    def __init__(self, html):
+        super().__init__()
+        self.load(QtCore.QUrl(html))
+        
     def getLatitude(self):
         return self.page().runJavaScript("latitude", print)
 
@@ -47,10 +51,9 @@ class View(QtWidgets.QWidget):
         self.__imageLabel = ImageLavel()
         self.__workSpaceLabel = WorkSpaceLabel(workSpacePath)
         self.__listWidget = QtWidgets.QListWidget()
-        self.__webView = WebView()
+        self.__webView = WebView("file://" + execPath + "/map.html")
 
         self.installEventFilter(Filter(self))
-        self.__webView.load(QtCore.QUrl("file://" + execPath + "/map.html"))
 
         self.__layout()
         self.__setSlot()
