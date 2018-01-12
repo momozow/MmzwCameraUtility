@@ -6,7 +6,9 @@ class Filter(QtCore.QObject):
     def eventFilter(self, widget, event):
         if event.type() == QtCore.QEvent.KeyRelease:
             if event.key() == QtCore.Qt.Key_Space:
-                print(True)
+                print(widget.getWorkSpace())
+                #widget.__webView.page().runJavaScript("latitude", print)
+                #self.__webView.page().runJavaScript("longitude", print)
                 return True
 
         return False
@@ -26,6 +28,13 @@ class WorkSpaceLabel(QtWidgets.QLineEdit):
 
     def getWorkSpace(self):
         return self.text()
+
+class WebView(QtWebEngineWidgets.QWebEngineView):
+    def getLatitude(self):
+        return self.page().runJavaScript("latitude", print)
+
+    def getLongitude(self):
+        return self.page().runJavaScript("longitude", print)
 
 class View(QtWidgets.QWidget):
     @staticmethod
@@ -80,10 +89,4 @@ class View(QtWidgets.QWidget):
             
             self.__listWidget.addItem(item)
 
-    def getLatLonFromMap(self):
-        self.__webView.page().runJavaScript("latitude", print)
-
-    # def keyPressEvent(self, e):
-    #     if e.key() == QtCore.Qt.Key_Space:
-    #         print('SPC')
-    #         self.getLatLonFromMap()
+#        self.__webView.page().runJavaScript("latitude", print)
