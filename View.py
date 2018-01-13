@@ -6,9 +6,7 @@ class Filter(QtCore.QObject):
     def eventFilter(self, widget, event):
         if event.type() == QtCore.QEvent.KeyRelease:
             if event.key() == QtCore.Qt.Key_Space:
-                print(widget.getWorkSpace())
-                #widget.__webView.page().runJavaScript("latitude", print)
-                #self.__webView.page().runJavaScript("longitude", print)
+                widget.preprocessImplantGPSTag()
                 return True
 
         return False
@@ -29,17 +27,6 @@ class WorkSpaceLabel(QtWidgets.QLineEdit):
     def getWorkSpace(self):
         return self.text()
 
-class WebView(QtWebEngineWidgets.QWebEngineView):
-    def __init__(self, html):
-        super().__init__()
-        self.load(QtCore.QUrl(html))
-        
-    def getLatitude(self):
-        return self.page().runJavaScript("latitude", print)
-
-    def getLongitude(self):
-        return self.page().runJavaScript("longitude", print)
-
 class View(QtWidgets.QWidget):
     @staticmethod
     def createApp(argv):
@@ -51,7 +38,7 @@ class View(QtWidgets.QWidget):
         self.__imageLabel = ImageLavel()
         self.__workSpaceLabel = WorkSpaceLabel(workSpacePath)
         self.__listWidget = QtWidgets.QListWidget()
-        self.__webView = WebView("file://" + execPath + "/map.html")
+        self.__webView = QtWebEngineWidgets.QWebEngineView()
 
         self.installEventFilter(Filter(self))
 
@@ -92,4 +79,9 @@ class View(QtWidgets.QWidget):
             
             self.__listWidget.addItem(item)
 
-#        self.__webView.page().runJavaScript("latitude", print)
+    def preprocessImplantGPSTag(self):
+        self.__webView.page().runJavaScript("latitude", self.implantGPSTag)
+        
+    def implantGPSTag(self, latitude):
+        print(self.__workSpaceLabel.getWorkSpace())
+        print(latitude)        
