@@ -39,6 +39,7 @@ class View(QtWidgets.QWidget):
         self.__workSpaceLabel = WorkSpaceLabel(workSpacePath)
         self.__listWidget = QtWidgets.QListWidget()
         self.__webView = QtWebEngineWidgets.QWebEngineView()
+        self.__webView.load(QtCore.QUrl("file://" + execPath + "/map.html"))
 
         self.installEventFilter(Filter(self))
 
@@ -80,8 +81,8 @@ class View(QtWidgets.QWidget):
             self.__listWidget.addItem(item)
 
     def preprocessImplantGPSTag(self):
-        self.__webView.page().runJavaScript("latitude", self.implantGPSTag)
+        self.__webView.page().runJavaScript("latitude", self.__implantGPSTag)
         
-    def implantGPSTag(self, latitude):
+    def __implantGPSTag(self, latitude):
         print(self.__workSpaceLabel.getWorkSpace())
         print(latitude)        
