@@ -80,9 +80,33 @@ class View(QtWidgets.QWidget):
             
             self.__listWidget.addItem(item)
 
-    def preprocessImplantGPSTag(self):
-        self.__webView.page().runJavaScript("latitude", self.__implantGPSTag)
+    def __convertToExifToolOptions(self, latlon):
+        try:
+            latlon = list(map(float, latlon.split(",")))
+            if latlon[0] > 0:
+                latitudeRef = "North"
+            else:
+                latitudeRef = "South"
+
+            if latlon[1] > 0:
+                longitudeRef = "East"
+            else:
+                longitudeRef = "West"
+
+            option = "-GPSLatitude=\"" + str(latlon[0]) + "\" -GPSLatitudeRef=\"" + latitudeRef + "\" -GPSLongitude=\"" + str(latlon[1]) + "\" -GPSLongitudeRef=\"" + longitudeRef + "\""
+            return option
+        except:
+            print("Wrong type, Latitude or/and Longitude")
+            return None
         
-    def __implantGPSTag(self, latitude):
-        print(self.__workSpaceLabel.getWorkSpace())
-        print(latitude)        
+    def __implantGPSTag(self, latlon):
+        ws = self.__workSpaceLabel.getWorkSpace()
+        gpstag = self.__convertToExifToolOptions(latlon)
+
+        if ws is not None and gpstag is not None:
+            print("exiftool " + ws + " " + gpstag)
+        
+    def preprocessImplantGPSTag(self):
+        # Get Latitude and Longitude from webView
+        self.__webView.page().runJavaScript("\"\" + latitude + \",\" + longitude", self.__implantGPSTag)
+        
