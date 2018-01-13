@@ -27,6 +27,17 @@ class WorkSpaceLabel(QtWidgets.QLineEdit):
     def getWorkSpace(self):
         return self.text()
 
+class ListWidget(QtWidgets.QListWidget):
+    def __init__(self):
+        super().__init__()
+        self.__current = None
+
+    def changeCurrent(self, current):
+        self.__current = current.text()
+
+    def getCurrent(self):
+        return self.__current
+
 class View(QtWidgets.QWidget):
     @staticmethod
     def createApp(argv):
@@ -37,22 +48,21 @@ class View(QtWidgets.QWidget):
 
         self.__imageLabel = ImageLavel()
         self.__workSpaceLabel = WorkSpaceLabel(workSpacePath)
-        self.__listWidget = QtWidgets.QListWidget()
+        self.__fileList = ListWidget()
         self.__webView = QtWebEngineWidgets.QWebEngineView()
         self.__webView.load(QtCore.QUrl("file://" + execPath + "/map.html"))
 
-        self.installEventFilter(Filter(self))
-
         self.__layout()
         self.__setSlot()
+        self.installEventFilter(Filter(self))
         
     def __layout(self):
-        self.__listWidget.resize(120, 240)
+        self.__fileList.resize(120, 240)
         
         vbox = QtWidgets.QVBoxLayout()
         vbox.addWidget(self.__imageLabel)
         vbox.addWidget(self.__workSpaceLabel)
-        vbox.addWidget(self.__listWidget)
+        vbox.addWidget(self.__fileList)
 
         hbox = QtWidgets.QHBoxLayout()
         hbox.addLayout(vbox)
@@ -61,12 +71,13 @@ class View(QtWidgets.QWidget):
         self.setLayout(hbox)
 
     def __setSlot(self):
-        self.__listWidget.currentItemChanged.connect(self.__getAndShowPreviewOfCurrentItem)
+        self.__fileList.currentItemChanged.connect(self.__getAndShowPreviewOfCurrentItem)
         
     def __getAndShowPreviewOfCurrentItem(self, current, previous):
         if current is not None:
+            self.__fileList.changeCurrent(current)
+            
             thumbnail = ImageController.readThumbnail(self.__workSpaceLabel.getWorkSpace() + current.text())
-
             if thumbnail is not None:
                 self.__imageLabel.showImage(thumbnail)
 
@@ -78,7 +89,7 @@ class View(QtWidgets.QWidget):
             item = QtWidgets.QListWidgetItem()
             item.setText(fileName)
             
-            self.__listWidget.addItem(item)
+            self.__fileList.addItem(item)
 
     def __convertToExifToolOptions(self, latlon):
         try:
@@ -101,10 +112,11 @@ class View(QtWidgets.QWidget):
         
     def __implantGPSTag(self, latlon):
         ws = self.__workSpaceLabel.getWorkSpace()
+        fileName = self.__fileList.getCurrent()
         gpstag = self.__convertToExifToolOptions(latlon)
 
-        if ws is not None and gpstag is not None:
-            print("exiftool " + ws + " " + gpstag)
+        if ws is not None and gpstag is not None and fileName is not None:
+            print("exiftool " + ws + fileName + " " + gpstag)
         
     def preprocessImplantGPSTag(self):
         # Get Latitude and Longitude from webView
