@@ -1,4 +1,5 @@
 from ImageController import ImageController
+from ImageController import Foundation
 from PyQt5 import (QtWidgets, QtWebEngineWidgets, QtGui, QtCore)
 import os
 
@@ -104,7 +105,10 @@ class View(QtWidgets.QWidget):
             else:
                 longitudeRef = "West"
 
-            option = "-GPSLatitude=\"" + str(latlon[0]) + "\" -GPSLatitudeRef=\"" + latitudeRef + "\" -GPSLongitude=\"" + str(latlon[1]) + "\" -GPSLongitudeRef=\"" + longitudeRef + "\""
+            option = ["-GPSLatitude=" + str(latlon[0]),
+                      "-GPSLatitudeRef=" + latitudeRef,
+                      "-GPSLongitude=" + str(latlon[1]),
+                      "-GPSLongitudeRef=" + longitudeRef]
             return option
         except:
             print("Wrong type, Latitude or/and Longitude")
@@ -116,7 +120,10 @@ class View(QtWidgets.QWidget):
         gpstag = self.__convertToExifToolOptions(latlon)
 
         if ws is not None and gpstag is not None and fileName is not None:
-            print("exiftool " + ws + fileName + " " + gpstag)
+            cmd = ["exiftool"]
+            cmd.extend(gpstag)
+            cmd.append("" + ws + fileName)
+            print(Foundation.run(cmd))
         
     def preprocessImplantGPSTag(self):
         # Get Latitude and Longitude from webView
