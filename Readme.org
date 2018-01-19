@@ -1,3 +1,13 @@
+* Usage
+
+[[./preview.png]]
+
+1. Input path to work space. File list will be displayed.
+2. Select a curious file. 
+3. Drink in the beauty photo.
+4. Bring back memories of ex-girlfriend, and click/tap point.
+5. 'Space' key, implant GPS EXIF tag.
+
 * Requirement
 Python 3.6.4
 
